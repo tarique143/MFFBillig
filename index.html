@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+        }
+
+        .logo img {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .custom-text {
+            text-align: center;
+            font-weight: bold;
+            
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="bill-form" class="no-print">
+            <div class="form-group">
+                <label for="custom-heading">Location Name:</label>
+                <input type="text" id="custom-heading" placeholder="Enter custom heading" oninput="updateHeading()">
+            </div>
+            <div class="form-group">
+                <label for="custom-text">section Area(Hall,kitchen,Bedroom):</label>
+                <input type="text" id="custom-text">
+            </div>
+            <div class="form-group">
+                <label for="product-name">Product:</label>
+                <input type="text" id="product-name" required>
+            </div>
+            <div class="form-group">
+                <label for="sq-feet-length">Sq Feet Length:</label>
+                <input type="number" id="sq-feet-length">
+            </div>
+            <div class="form-group">
+                <label for="sq-feet-width">Sq Feet Width:</label>
+                <input type="number" id="sq-feet-width">
+            </div>
+            <div class="form-group">
+                <label for="rate">Rate (₹):</label>
+                <input type="number" id="rate" required>
+            </div>
+            <div class="form-group">
+                <label for="paid-amount">Paid Amount (₹):</label>
+                <input type="number" id="paid-amount" oninput="calculateBalance()">
+            </div>
+            <button type="button" onclick="addItem()">Add Item</button>
+        </form>
+
+        <div id="bill-details">
+            <div class="logo">
+                <img src="logo.jpg" alt="Logo">
+            </div>
+            <h2 id="bill-heading">Bill Details</h2>
+            <table id="bill-table">
+                <thead>
+                    <tr>
+                        <th colspan="6" class="custom-text" id="custom-text-heading"></th>
+                    </tr>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Product</th>
+                        <th>Sq Feet Length</th>
+                        <th>Sq Feet Width</th>
+                        <th>Total Sq Feet</th>
+                        <th>Rate (₹)</th>
+                        <th>Total Amount (₹)</th>
+                        <th class="action-column">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <h3>Total Amount: ₹<span id="total-amount">0.00</span></h3>
+            <h3>Paid Amount: ₹<span id="display-paid-amount">0.00</span></h3>
+            <h3>Remaining Balance: ₹<span id="remaining-amount">0.00</span></h3>
+        </div>
+
+        <button id="print-button" class="no-print" onclick="preparePrint()">Print Bill</button>
+    </div>
+
+    <script>
+        let totalAmount = 0;
+        let srNoCounter = 1;
+        let editRow = null;
+
+        function addItem() {
+            const productName = document.getElementById('product-name').value;
+            const customText = document.getElementById('custom-text').value;
+            const sqFeetLength = parseFloat(document.getElementById('sq-feet-length').value);
+            const sqFeetWidth = parseFloat(document.getElementById('sq-feet-width').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+
+            if (productName && rate > 0) {
+                let totalSqFeet = 1;  // Default to 1 if dimensions are not provided
+                if (!isNaN(sqFeetLength) && !isNaN(sqFeetWidth)) {
+                    totalSqFeet = sqFeetLength * sqFeetWidth;
+                }
+
+                const totalAmountForItem = totalSqFeet * rate;
+
+                const billTableBody = document.querySelector('#bill-table tbody');
+                const newRow = document.createElement('tr');
+
+                // Insert custom text as a new row before the product details
+                if (customText) {
+                    const customTextRow = document.createElement('tr');
+                    customTextRow.innerHTML = `
+                        <td colspan="8" class="custom-text">${customText}</td>`;
+                    billTableBody.appendChild(customTextRow);
+                }
+
+                newRow.innerHTML = `
+                    <td>${srNoCounter}</td>
+                    <td>${productName}</td>
+                    <td>${!isNaN(sqFeetLength) ? sqFeetLength.toFixed(2) : 'N/A'}</td>
+                    <td>${!isNaN(sqFeetWidth) ? sqFeetWidth.toFixed(2) : 'N/A'}</td>
+                    <td>${totalSqFeet.toFixed(2)}</td>
+                    <td>₹${rate.toFixed(2)}</td>
+                    <td>₹${totalAmountForItem.toFixed(2)}</td>
+                    <td class="action-column">
+                        <button onclick="editItem(this)">Edit</button>
+                        <button onclick="deleteItem(this)">Delete</button>
+                    </td>` ;
+
+                billTableBody.appendChild(newRow);
+                totalAmount += totalAmountForItem;
+
+                document.getElementById('total-amount').textContent = `${totalAmount.toFixed(2)}`;
+                document.getElementById('bill-form').reset();
+
+                // Increment the serial number
+                srNoCounter++;
+
+                // Show the print button after the first item is added
+                document.getElementById('print-button').classList.remove('no-print');
+            } else {
+                alert('Please enter valid item details.');
+            }
+        }
+
+        function editItem(button) {
+            editRow = button.parentElement.parentElement;
+            const customTextRow = editRow.previousElementSibling;
+            document.getElementById('product-name').value = editRow.cells[1].textContent;
+            document.getElementById('custom-text').value = customTextRow ? customTextRow.cells[0].textContent : '';
+            document.getElementById('sq-feet-length').value = editRow.cells[2].textContent !== 'N/A' ? editRow.cells[2].textContent : '';
+            document.getElementById('sq-feet-width').value = editRow.cells[3].textContent !== 'N/A' ? editRow.cells[3].textContent : '';
+            document.getElementById('rate').value = editRow.cells[5].textContent.replace('₹', '');
+        }
+
+        function deleteItem(button) {
+            const row = button.parentElement.parentElement;
+            const customTextRow = row.previousElementSibling;
+            const amountToDelete = parseFloat(row.cells[6].textContent.replace('₹', '').replace(',', ''));
+            totalAmount -= amountToDelete;
+            document.getElementById('total-amount').textContent = `${totalAmount.toFixed(2)}`;
+            row.remove();
+            if (customTextRow) {
+                customTextRow.remove();  // Remove corresponding custom text row
+            }
+            // Decrement the serial number and update rows
+            srNoCounter--;
+            updateSerialNumbers();
+        }
+
+        function updateSerialNumbers() {
+            const rows = document.querySelectorAll('#bill-table tbody tr');
+            let currentSrNo = 1;
+            rows.forEach(row => {
+                const srNoCell = row.cells[0];
+                if (srNoCell) {
+                    srNoCell.textContent = currentSrNo++;
+                }
+            });
+        }
+
+        function calculateBalance() {
+            const paidAmount = parseFloat(document.getElementById('paid-amount').value) || 0;
+            const remainingAmount = totalAmount - paidAmount;
+            document.getElementById('display-paid-amount').textContent = paidAmount.toFixed(2);
+            document.getElementById('remaining-amount').textContent = remainingAmount.toFixed(2);
+        }
+
+        function updateHeading() {
+            const customHeading = document.getElementById('custom-heading').value;
+            document.getElementById('bill-heading').textContent = customHeading || 'Bill Details';
+        }
+
+        function preparePrint() {
+            // Hide the 'Actions' column before printing
+            const actionColumns = document.querySelectorAll('.action-column');
+            actionColumns.forEach(column => column.style.display = 'none');
+
+            // Print only the bill-details section
+            window.print();
+
+            // Restore the 'Actions' column after printing
+            actionColumns.forEach(column => column.style.display = '');
+        }
+    </script>
+</body>
+</html>
