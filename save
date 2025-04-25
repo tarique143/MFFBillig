@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUMBAI FANCY FURNITURE - Bill Generator</title>
+    <style>
+        /* --- Base & Layout Styles --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* --- Company Header --- */
+        .company-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .company-header .logo img {
+            max-width: 150px;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .company-header h1 {
+            margin: 5px 0;
+            color: #0056b3;
+            font-size: 1.6rem;
+        }
+
+        .company-header p {
+            margin: 3px 0;
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* --- Headings --- */
+        h2, h3 {
+            text-align: center;
+            margin: 15px 0;
+            color: #333;
+        }
+        h2 { font-size: 1.4rem; }
+        h3 { font-size: 1.1rem; }
+
+
+        /* --- Form Sections --- */
+        .form-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #fdfdfd;
+        }
+
+        .form-section h3 {
+            margin-top: 0;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            flex: 0 0 150px;
+            padding-right: 10px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            flex: 1 1 auto;
+            padding: 9px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+         .form-group textarea {
+            resize: vertical;
+            min-height: 50px;
+         }
+
+        /* --- Table Styles --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.9rem;
+            vertical-align: top;
+        }
+        th {
+            background-color: #e9ecef;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .custom-text-row td {
+            font-weight: bold;
+            text-align: center;
+            background-color: #e9f5ff;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            color: #0056b3;
+            font-style: italic;
+        }
+
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6),
+        td:nth-child(7) {
+            text-align: right;
+        }
+        th:nth-child(3),
+        th:nth-child(4),
+        th:nth-child(5),
+        th:nth-child(6),
+        th:nth-child(7) {
+             text-align: right;
+        }
+
+
+        /* --- Totals Section --- */
+        .totals-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
+         .totals-section h3 {
+            text-align: right;
+             margin: 6px 0;
+             font-size: 1.1rem;
+             font-weight: normal;
+             color: #555;
+         }
+        .totals-section span {
+            display: inline-block;
+            min-width: 100px;
+            font-weight: bold;
+            color: #333;
+            margin-left: 10px;
+        }
+         .totals-section h3:last-child {
+             font-weight: bold;
+             color: #dc3545;
+         }
+         .totals-section h3:last-child span {
+              color: #dc3545;
+         }
+
+
+        /* --- Buttons --- */
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px 0 0;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            opacity: 0.9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        button:active {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        button#add-update-button { background-color: #007bff; }
+        button#add-update-button:hover { background-color: #0056b3; }
+        button.edit-btn { background-color: #ffc107; color: #333; padding: 5px 10px; font-size: 0.8rem; }
+        button.edit-btn:hover { background-color: #e0a800; }
+        button.delete-btn { background-color: #dc3545; padding: 5px 10px; font-size: 0.8rem; }
+        button.delete-btn:hover { background-color: #c82333; }
+        button.clear-btn { background-color: #fd7e14; }
+        button.clear-btn:hover { background-color: #e97011; }
+        button#print-button { background-color: #28a745; }
+        button#print-button:hover { background-color: #218838; }
+
+        .item-form-buttons {
+             display: flex;
+             flex-wrap: wrap;
+             align-items: center;
+        }
+
+        /* --- Bill Display Sections --- */
+        .action-column {
+            width: 110px;
+            text-align: center;
+        }
+        .action-column button {
+            margin: 2px;
+        }
+
+        .bill-details {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #0056b3;
+        }
+
+        .bill-info {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .bill-info div {
+            width: 48%;
+            margin-bottom: 10px;
+        }
+        .bill-info strong {
+            display: inline-block;
+            width: 80px;
+            color: #555;
+        }
+        #customer-info-display {
+            border-right: 1px solid #eee;
+            padding-right: 10px;
+        }
+        #bill-meta-display {
+            text-align: right;
+             padding-left: 10px;
+        }
+
+
+        /* --- Print Styles --- */
+        @media print {
+            body { background-color: white; font-size: 10pt; color: black; line-height: 1.3; }
+            .container { max-width: 100%; margin: 0; padding: 0; box-shadow: none; border-radius: 0; border: none; }
+            .no-print { display: none !important; }
+            .action-column { display: none; }
+            table { font-size: 9pt; width: 100%; margin-bottom: 10px; }
+            th, td { padding: 5px; border-bottom: 1px solid #ccc; font-size: 9pt; }
+            th { background-color: #f2f2f2; }
+            td:nth-child(n+3), th:nth-child(n+3) { text-align: right; }
+            .totals-section { margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc; }
+            .totals-section h3 { font-size: 10pt; margin: 4px 0; }
+            .totals-section span { min-width: 80px; }
+            .company-header, .bill-details { border-top: none; padding-top: 0; margin-top: 0; }
+            .company-header { border-bottom: 1px solid #ccc; padding-bottom: 10px; text-align: center; }
+            .company-header h1 { font-size: 14pt; margin-bottom: 5px; }
+            .company-header p { font-size: 9pt; margin: 2px 0; }
+            .company-header .logo img { max-width: 120px; margin-bottom: 5px; }
+            .bill-info { font-size: 9pt; margin-bottom: 15px; line-height: 1.4; }
+            .bill-info div { width: 49%; }
+            #customer-info-display { border-right: none; padding-right: 0; }
+            #bill-meta-display { padding-left: 0; }
+            .custom-text-row td { background-color: #f0f0f0 !important; color: black !important; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-style: normal; }
+            button { display: none; }
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            /* --- START: PRINT WATERMARK --- */
+            body::after {
+                content: ""; /* Required for pseudo-elements */
+                background-image: url('small_logo.png'); /* Your watermark image */
+                background-repeat: no-repeat;          /* Do not tile the image */
+                background-position: center center;      /* Center it on the page */
+                background-size: contain; /* Scale down large images to fit, preserving aspect ratio */
+                /* Optional: Use percentage for size relative to page: background-size: 60%; */
+                /* Optional: Use fixed pixel size: background-size: 300px; */
+
+                position: fixed; /* Fixed relative to the page */
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: -1;     /* Send it behind the main content */
+
+                opacity: 0.1;  /* Make it faint (adjust 0.0 to 1.0) */
+            }
+            /* --- END: PRINT WATERMARK --- */
+        }
+
+        /* --- Mobile Styles --- */
+        @media (max-width: 600px) {
+            .container { margin: 10px; padding: 15px; }
+            .form-group { flex-direction: column; align-items: stretch; }
+            .form-group label { flex: 0 0 auto; margin-bottom: 3px; font-size: 0.9rem; padding-right: 0; }
+            .form-group input, .form-group textarea { width: 100%; }
+            .company-header h1 { font-size: 1.3rem; }
+            h2 { font-size: 1.2rem; }
+            h3 { font-size: 1rem; }
+            table, th, td { font-size: 0.8rem; }
+            th, td { padding: 6px; }
+            .action-column { width: 90px; }
+            .action-column button { padding: 4px 6px; font-size: 0.75rem; }
+            button { font-size: 0.9rem; padding: 9px 15px; }
+            .bill-info { flex-direction: column; }
+            .bill-info div { width: 100%; margin-bottom: 8px; }
+            #customer-info-display { border-right: none; padding-right: 0; border-bottom: 1px dashed #eee; padding-bottom: 8px;}
+            #bill-meta-display { text-align: left; padding-left: 0; }
+            .item-form-buttons button { margin-bottom: 5px; }
+            .totals-section { text-align: left; }
+            .totals-section h3 { text-align: left; }
+            .totals-section span { float: right; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ======================== -->
+        <!-- INPUT FORM (NO PRINT)   -->
+        <!-- ======================== -->
+        <div class="no-print">
+            <div class="company-header">
+                 <div class="logo">
+                    <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
+                 </div>
+                <h1>MUMBAI FANCY FURNITURE</h1>
+                 <p>Kurla Kutumandal, B.K.C. Road, L.B.S. Marg, Kurla (W), Mumbai-400070.</p>
+                 <p>Phone: +91 99567 67572 | Email: Irshadanshari6301@gmail.com</p>
+            </div>
+
+            <h2>Generate New Bill</h2>
+
+            <form id="bill-form" onsubmit="return false;">
+                <!-- Customer Details Section -->
+                <div class="form-section">
+                    <h3>Customer Details</h3>
+                     <div class="form-group">
+                        <label for="bill-no">Bill No:</label>
+                        <input type="text" id="bill-no" value="MFF-INV-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="bill-date">Bill Date:</label>
+                        <input type="date" id="bill-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-name">Customer Name:</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="customer-address">Address:</label>
+                        <textarea id="customer-address" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Phone:</label>
+                        <input type="tel" id="customer-phone" placeholder="Optional">
+                    </div>
+                </div>
+
+                <!-- Item Details Section -->
+                <div class="form-section">
+                    <h3>Add / Edit Item</h3>
+                    <div class="form-group">
+                        <label for="custom-text">Section Area:</label>
+                        <input type="text" id="custom-text" placeholder="e.g., Hall, Kitchen (Optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-name">Product/Service:</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sq-feet-length">Length (ft):</label>
+                        <input type="number" step="0.01" min="0" id="sq-feet-length" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="sq-feet-width">Width (ft):</label>
+                        <input type="number" step="0.01" min="0" id="sq-feet-width" placeholder="Optional">
+                    </div>
+                     <div class="form-group">
+                        <label for="rate">Rate (₹):</label>
+                        <input type="number" step="0.01" min="0.01" id="rate" required placeholder="per sqft or unit">
+                    </div>
+                    <div class="item-form-buttons">
+                        <button type="button" id="add-update-button" onclick="addOrUpdateItem()">Add Item</button>
+                        <button type="button" class="clear-btn" onclick="removeAllItems()">Clear All Items</button>
+                    </div>
+                    <input type="hidden" id="edit-row-index">
+                </div>
+
+                 <!-- Payment Details Section -->
+                 <div class="form-section">
+                     <h3>Payment</h3>
+                    <div class="form-group">
+                        <label for="paid-amount">Paid Amount (₹):</label>
+                        <input type="number" step="0.01" min="0" id="paid-amount" value="0" oninput="updateBalance()">
+                    </div>
+                 </div>
+            </form>
+        </div>
+
+        <!-- ======================== -->
+        <!-- BILL DISPLAY (PRINTABLE) -->
+        <!-- ======================== -->
+        <div id="bill-details">
+             <div class="company-header">
+                 <div class="logo">
+                    <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
+                 </div>
+                 <h1>MUMBAI FANCY FURNITURE</h1>
+                 <p>Kurla Kutumandal, B.K.C. Road, L.B.S. Marg, Kurla (W), Mumbai-400070.</p>
+                 <p>Phone: +91 99567 67572 | Email: Irshadanshari6301@gmail.com</p>
+            </div>
+
+            <h2>Tax Invoice / Bill</h2>
+
+            <!-- Bill Info (Customer & Meta) -->
+            <div class="bill-info">
+                <div id="customer-info-display"></div>
+                 <div id="bill-meta-display"></div>
+            </div>
+
+            <!-- Bill Items Table -->
+            <table id="bill-table">
+                <thead>
+                    <tr>
+                        <th>Sr.</th>
+                        <th>Product / Description</th>
+                        <th>Length</th>
+                        <th>Width</th>
+                        <th>Total SqFt/Unit</th>
+                        <th>Rate (₹)</th>
+                        <th>Amount (₹)</th>
+                        <th class="action-column no-print">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr><td colspan="8" style="text-align: center; color: #888; padding: 20px 0;">No items added yet.</td></tr>
+                </tbody>
+            </table>
+
+            <!-- Totals Section -->
+            <div class="totals-section">
+                <h3>Total Amount: <span id="total-amount">₹ 0.00</span></h3>
+                <h3>Paid Amount: <span id="display-paid-amount">₹ 0.00</span></h3>
+                <h3>Remaining Balance: <span id="remaining-amount">₹ 0.00</span></h3>
+            </div>
+        </div>
+
+        <button id="print-button" class="no-print" onclick="preparePrint()">Print Bill</button>
+    </div>
+
+    <!-- ======================== -->
+    <!-- JAVASCRIPT LOGIC         -->
+    <!-- ======================== -->
+    <script>
+        let billItems = [];
+        let editIndex = -1;
+        let totalAmount = 0;
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('bill-date').valueAsDate = new Date();
+            updateBillDisplayInfo();
+             renderTable();
+        });
+
+        // --- Item Management ---
+        function addOrUpdateItem() {
+            const customText = document.getElementById('custom-text').value.trim();
+            const productName = document.getElementById('product-name').value.trim();
+            const sqFeetLengthInput = document.getElementById('sq-feet-length').value;
+            const sqFeetWidthInput = document.getElementById('sq-feet-width').value;
+            const rateInput = document.getElementById('rate').value;
+
+            if (!productName) {
+                alert('Please enter a Product/Service name.');
+                document.getElementById('product-name').focus();
+                return;
+            }
+             if (!rateInput || parseFloat(rateInput) <= 0) {
+                alert('Please enter a valid Rate (must be greater than 0).');
+                 document.getElementById('rate').focus();
+                return;
+             }
+
+            const sqFeetLength = parseFloat(sqFeetLengthInput) || 0;
+            const sqFeetWidth = parseFloat(sqFeetWidthInput) || 0;
+            const rate = parseFloat(rateInput);
+
+            let totalSqFeet = 1;
+            if (sqFeetLength > 0 && sqFeetWidth > 0) {
+                totalSqFeet = sqFeetLength * sqFeetWidth;
+            } else if (sqFeetLength > 0) {
+                 totalSqFeet = sqFeetLength;
+            } else if (sqFeetWidth > 0) {
+                 totalSqFeet = sqFeetWidth;
+            }
+
+            const totalAmountForItem = totalSqFeet * rate;
+
+            const itemData = {
+                customText: customText,
+                productName: productName,
+                sqFeetLength: sqFeetLength > 0 ? sqFeetLength : null,
+                sqFeetWidth: sqFeetWidth > 0 ? sqFeetWidth : null,
+                totalSqFeet: totalSqFeet,
+                rate: rate,
+                totalAmount: totalAmountForItem,
+                id: Date.now() + Math.random().toString(36).substring(2)
+            };
+
+            if (editIndex > -1) {
+                billItems[editIndex] = itemData;
+                editIndex = -1;
+                document.getElementById('add-update-button').textContent = 'Add Item';
+            } else {
+                billItems.push(itemData);
+            }
+
+            renderTable();
+            updateTotals();
+            resetItemFormFields();
+        }
+
+        function editItem(index) {
+            if (index < 0 || index >= billItems.length) return;
+
+            editIndex = index;
+            const item = billItems[index];
+
+            document.getElementById('custom-text').value = item.customText || '';
+            document.getElementById('product-name').value = item.productName;
+            document.getElementById('sq-feet-length').value = item.sqFeetLength || '';
+            document.getElementById('sq-feet-width').value = item.sqFeetWidth || '';
+            document.getElementById('rate').value = item.rate;
+
+            document.getElementById('add-update-button').textContent = 'Update Item';
+            document.getElementById('product-name').focus();
+            document.getElementById('bill-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function deleteItem(index) {
+             if (index < 0 || index >= billItems.length) return;
+
+             const itemNameToDelete = billItems[index].productName;
+             if (confirm(`Are you sure you want to delete item "${itemNameToDelete}"?`)) {
+                billItems.splice(index, 1);
+                if (editIndex === index) {
+                     resetItemFormFields();
+                     editIndex = -1;
+                     document.getElementById('add-update-button').textContent = 'Add Item';
+                 } else if (editIndex > index) {
+                     editIndex--;
+                 }
+                renderTable();
+                updateTotals();
+            }
+        }
+
+        function removeAllItems() {
+            if (billItems.length === 0) {
+                alert("There are no items to remove.");
+                return;
+            }
+            if (confirm("Are you sure you want to remove ALL items from this bill? This cannot be undone.")) {
+                billItems = [];
+                editIndex = -1;
+                renderTable();
+                updateTotals();
+                resetItemFormFields();
+                alert("All items have been removed.");
+            }
+        }
+
+        // --- Rendering and Calculations ---
+        function renderTable() {
+            const billTableBody = document.querySelector('#bill-table tbody');
+            billTableBody.innerHTML = '';
+            let srNoCounter = 1;
+
+            if (billItems.length === 0) {
+                 billTableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #888; padding: 20px 0;">No items added yet.</td></tr>`;
+                 return;
+            }
+
+            billItems.forEach((item, index) => {
+                if (item.customText) {
+                    const customTextRow = document.createElement('tr');
+                    customTextRow.classList.add('custom-text-row');
+                    customTextRow.innerHTML = `<td colspan="8">${item.customText}</td>`;
+                    billTableBody.appendChild(customTextRow);
+                }
+
+                const newRow = document.createElement('tr');
+                newRow.setAttribute('data-index', index);
+                newRow.innerHTML = `
+                    <td style="text-align: center;">${srNoCounter}</td>
+                    <td>${item.productName}</td>
+                    <td>${item.sqFeetLength ? item.sqFeetLength.toFixed(2) : '---'}</td>
+                    <td>${item.sqFeetWidth ? item.sqFeetWidth.toFixed(2) : '---'}</td>
+                    <td>${item.totalSqFeet.toFixed(2)}</td>
+                    <td>${item.rate.toFixed(2)}</td>
+                    <td>${item.totalAmount.toFixed(2)}</td>
+                    <td class="action-column no-print">
+                        <button class="edit-btn" onclick="editItem(${index})" title="Edit Item">Edit</button>
+                        <button class="delete-btn" onclick="deleteItem(${index})" title="Delete Item">Delete</button>
+                    </td>
+                `;
+                billTableBody.appendChild(newRow);
+                srNoCounter++;
+            });
+        }
+
+         function updateTotals() {
+            totalAmount = billItems.reduce((sum, item) => sum + item.totalAmount, 0);
+            document.getElementById('total-amount').textContent = `₹ ${totalAmount.toFixed(2)}`;
+            updateBalance();
+         }
+
+        function updateBalance() {
+            const paidAmount = parseFloat(document.getElementById('paid-amount').value) || 0;
+            const remainingAmount = totalAmount - paidAmount;
+            document.getElementById('display-paid-amount').textContent = `₹ ${paidAmount.toFixed(2)}`;
+            document.getElementById('remaining-amount').textContent = `₹ ${remainingAmount.toFixed(2)}`;
+        }
+
+         // --- Form Handling ---
+         function resetItemFormFields() {
+            document.getElementById('custom-text').value = '';
+            document.getElementById('product-name').value = '';
+            document.getElementById('sq-feet-length').value = '';
+            document.getElementById('sq-feet-width').value = '';
+            document.getElementById('rate').value = '';
+            if (editIndex > -1) {
+                 document.getElementById('add-update-button').textContent = 'Add Item';
+                 editIndex = -1;
+            }
+        }
+
+        // --- Bill Header/Footer Info ---
+        function updateBillDisplayInfo() {
+             const billNo = document.getElementById('bill-no').value || 'N/A';
+             const billDateInput = document.getElementById('bill-date').value;
+             const customerName = document.getElementById('customer-name').value || 'N/A';
+             const customerAddress = (document.getElementById('customer-address').value || 'N/A').replace(/\n/g, '<br>');
+             const customerPhone = document.getElementById('customer-phone').value || 'N/A';
+
+            let billDateFormatted = 'N/A';
+             if (billDateInput) {
+                 try {
+                     const date = new Date(billDateInput + 'T00:00:00');
+                     if (!isNaN(date)) {
+                         const day = String(date.getDate()).padStart(2, '0');
+                         const month = String(date.getMonth() + 1).padStart(2, '0');
+                         const year = date.getFullYear();
+                         billDateFormatted = `${day}/${month}/${year}`;
+                     }
+                 } catch (e) {
+                     console.error("Error formatting date:", e);
+                 }
+             }
+
+            document.getElementById('customer-info-display').innerHTML = `
+                <strong>To:</strong><br>
+                ${customerName}<br>
+                ${customerAddress}<br>
+                <strong>Ph:</strong> ${customerPhone}
+            `;
+             document.getElementById('bill-meta-display').innerHTML = `
+                 <strong>Bill No:</strong> ${billNo}<br>
+                 <strong>Date:</strong> ${billDateFormatted}
+             `;
+        }
+
+        // --- Printing ---
+        function preparePrint() {
+             updateBillDisplayInfo();
+            window.print();
+        }
+
+        // --- Event Listeners ---
+        document.getElementById('customer-name').addEventListener('input', updateBillDisplayInfo);
+        document.getElementById('customer-address').addEventListener('input', updateBillDisplayInfo);
+        document.getElementById('customer-phone').addEventListener('input', updateBillDisplayInfo);
+        document.getElementById('bill-no').addEventListener('input', updateBillDisplayInfo);
+        document.getElementById('bill-date').addEventListener('change', updateBillDisplayInfo);
+
+    </script>
+</body>
+</html>
