@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUMBAI FANCY FURNITURE - Bill Generator</title>
     <style>
-        /* --- Existing Styles --- */
+        /* --- Base & Layout Styles --- */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -13,6 +13,7 @@
             box-sizing: border-box;
             background-color: #f8f9fa;
             color: #333;
+            line-height: 1.5;
         }
 
         .container {
@@ -24,6 +25,7 @@
             border-radius: 8px;
         }
 
+        /* --- Company Header --- */
         .company-header {
             text-align: center;
             margin-bottom: 20px;
@@ -32,29 +34,37 @@
         }
 
         .company-header .logo img {
-            max-width: 150px; /* Adjust logo size */
+            max-width: 150px;
             margin-bottom: 10px;
+            display: block; /* Center logo if needed */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .company-header h1 {
             margin: 5px 0;
             color: #0056b3;
-            font-size: 1.6rem; /* Slightly larger company name */
+            font-size: 1.6rem;
         }
 
         .company-header p {
-            margin: 3px 0; /* Slightly more space between address lines */
+            margin: 3px 0;
             font-size: 0.9rem;
             color: #555;
             line-height: 1.4;
         }
 
+        /* --- Headings --- */
         h2, h3 {
             text-align: center;
             margin: 15px 0;
             color: #333;
         }
+        h2 { font-size: 1.4rem; }
+        h3 { font-size: 1.1rem; }
 
+
+        /* --- Form Sections --- */
         .form-section {
             border: 1px solid #ddd;
             padding: 15px;
@@ -66,7 +76,6 @@
         .form-section h3 {
             margin-top: 0;
             text-align: left;
-            font-size: 1.1rem;
             border-bottom: 1px solid #eee;
             padding-bottom: 5px;
             margin-bottom: 15px;
@@ -83,13 +92,17 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            flex: 0 0 150px;
+            flex: 0 0 150px; /* Fixed width for labels */
+            padding-right: 10px; /* Space between label and input */
         }
 
-        .form-group input,
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group input[type="tel"],
         .form-group textarea {
-            flex: 1 1 auto;
-            padding: 8px;
+            flex: 1 1 auto; /* Allow input to grow */
+            padding: 9px; /* Slightly taller input */
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 0.95rem;
@@ -97,9 +110,10 @@
         }
          .form-group textarea {
             resize: vertical;
-            min-height: 40px;
+            min-height: 50px; /* Slightly taller textarea */
          }
 
+        /* --- Table Styles --- */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -107,141 +121,225 @@
         }
 
         th, td {
-            padding: 8px;
+            padding: 10px; /* Increased padding */
             text-align: left;
             border-bottom: 1px solid #ddd;
             font-size: 0.9rem;
             vertical-align: top;
         }
         th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+            background-color: #e9ecef; /* Lighter grey header */
+            font-weight: 600; /* Slightly bolder */
+            white-space: nowrap; /* Prevent header text wrapping */
         }
 
+        /* Custom text row for section headings */
         .custom-text-row td {
             font-weight: bold;
             text-align: center;
-            background-color: #e9f5ff;
+            background-color: #e9f5ff; /* Light blue background for section */
             border-top: 1px solid #ccc;
             border-bottom: 1px solid #ccc;
+            color: #0056b3; /* Darker blue text */
+            font-style: italic;
         }
 
+        /* Align numbers to the right in table */
+        td:nth-child(3), /* Length */
+        td:nth-child(4), /* Width */
+        td:nth-child(5), /* Total SqFt */
+        td:nth-child(6), /* Rate */
+        td:nth-child(7) { /* Total Amount */
+            text-align: right;
+        }
+        th:nth-child(3),
+        th:nth-child(4),
+        th:nth-child(5),
+        th:nth-child(6),
+        th:nth-child(7) {
+             text-align: right;
+        }
+
+
+        /* --- Totals Section --- */
         .totals-section {
             margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
             text-align: right;
         }
          .totals-section h3 {
             text-align: right;
-             margin: 5px 0;
+             margin: 6px 0; /* Increased spacing */
              font-size: 1.1rem;
+             font-weight: normal;
+             color: #555;
          }
         .totals-section span {
             display: inline-block;
-            min-width: 80px;
+            min-width: 100px; /* Wider span for amounts */
             font-weight: bold;
+            color: #333;
+            margin-left: 10px;
         }
+         /* Highlight remaining balance */
+         .totals-section h3:last-child {
+             font-weight: bold;
+             color: #dc3545; /* Red color for balance */
+         }
+         .totals-section h3:last-child span {
+              color: #dc3545;
+         }
 
-        /* General Button Styles */
+
+        /* --- Buttons --- */
         button {
             padding: 10px 18px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             margin: 10px 5px 0 0;
-            font-size: 1rem;
-            transition: background-color 0.2s ease;
-            color: white; /* Default text color */
+            font-size: 0.95rem; /* Adjusted font size */
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         button:hover {
             opacity: 0.9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        button:active {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         /* Specific Button Colors */
-        button#add-update-button { background-color: #007bff; }
+        button#add-update-button { background-color: #007bff; } /* Primary blue */
         button#add-update-button:hover { background-color: #0056b3; }
 
-        button.edit-btn { background-color: #ffc107; color: #333; padding: 4px 8px; font-size: 0.8rem; }
+        button.edit-btn { background-color: #ffc107; color: #333; padding: 5px 10px; font-size: 0.8rem; } /* Warning yellow */
         button.edit-btn:hover { background-color: #e0a800; }
 
-        button.delete-btn { background-color: #dc3545; padding: 4px 8px; font-size: 0.8rem; }
+        button.delete-btn { background-color: #dc3545; padding: 5px 10px; font-size: 0.8rem; } /* Danger red */
         button.delete-btn:hover { background-color: #c82333; }
 
-        /* --- NEW --- Clear All Button Style */
-        button.clear-btn { background-color: #fd7e14; /* Orange for caution */ }
+        button.clear-btn { background-color: #fd7e14; } /* Secondary orange */
         button.clear-btn:hover { background-color: #e97011; }
 
-        /* --- End NEW Style --- */
+        button#print-button { background-color: #28a745; } /* Success green */
+        button#print-button:hover { background-color: #218838; }
 
+        .item-form-buttons {
+             display: flex;
+             flex-wrap: wrap;
+             align-items: center; /* Align buttons vertically if they wrap */
+        }
 
+        /* --- Bill Display Sections --- */
         .action-column {
-            width: 100px;
+            width: 110px; /* Wider for buttons */
             text-align: center;
+        }
+        .action-column button {
+            margin: 2px; /* Space out edit/delete */
         }
 
         .bill-details {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 2px solid #0056b3;
+            border-top: 2px solid #0056b3; /* Thicker top border */
         }
 
         .bill-info {
-            margin-bottom: 20px;
+            margin-bottom: 25px; /* More space */
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            font-size: 0.95rem; /* Slightly larger info text */
+            line-height: 1.6;
         }
         .bill-info div {
             width: 48%;
+            margin-bottom: 10px; /* Space if they wrap */
         }
         .bill-info strong {
             display: inline-block;
-            width: 100px;
+            width: 80px; /* Adjusted width */
+            color: #555;
+        }
+        #customer-info-display {
+            border-right: 1px solid #eee; /* Separator */
+            padding-right: 10px;
+        }
+        #bill-meta-display {
+            text-align: right;
+             padding-left: 10px;
         }
 
 
+        /* --- Print Styles --- */
         @media print {
-            body { background-color: white; font-size: 10pt; color: black; }
-            .container { max-width: 100%; margin: 0; padding: 0; box-shadow: none; border-radius: 0; }
+            body { background-color: white; font-size: 10pt; color: black; line-height: 1.3; }
+            .container { max-width: 100%; margin: 0; padding: 0; box-shadow: none; border-radius: 0; border: none; }
             .no-print { display: none !important; }
             .action-column { display: none; }
-            table { font-size: 9pt; width: 100%; }
-            th, td { padding: 4px; border-bottom: 1px solid #ccc; }
-            .totals-section h3 { font-size: 10pt; }
+            table { font-size: 9pt; width: 100%; margin-bottom: 10px; }
+            th, td { padding: 5px; border-bottom: 1px solid #ccc; font-size: 9pt; }
+            th { background-color: #f2f2f2; }
+            td:nth-child(n+3), th:nth-child(n+3) { text-align: right; } /* Ensure right-align persists */
+            .totals-section { margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc; }
+            .totals-section h3 { font-size: 10pt; margin: 4px 0; }
+             .totals-section span { min-width: 80px; }
             .company-header, .bill-details { border-top: none; padding-top: 0; margin-top: 0; }
-            .company-header { border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-            .company-header h1 { font-size: 14pt; }
-            .company-header p { font-size: 9pt; }
-            .bill-info { font-size: 9pt; }
-            .custom-text-row td { background-color: #f0f0f0; color: black; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; }
-            button { display: none; }
+             .company-header { border-bottom: 1px solid #ccc; padding-bottom: 10px; text-align: center; }
+             .company-header h1 { font-size: 14pt; margin-bottom: 5px; }
+             .company-header p { font-size: 9pt; margin: 2px 0; }
+             .company-header .logo img { max-width: 120px; margin-bottom: 5px; }
+             .bill-info { font-size: 9pt; margin-bottom: 15px; line-height: 1.4; }
+             .bill-info div { width: 49%; }
+             #customer-info-display { border-right: none; padding-right: 0; }
+             #bill-meta-display { padding-left: 0; }
+             .custom-text-row td { background-color: #f0f0f0 !important; color: black !important; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-style: normal; }
+            button { display: none; } /* Hide all buttons */
+            @page {
+                size: A4;
+                margin: 1.5cm; /* Standard margins */
+            }
         }
 
+        /* --- Mobile Styles --- */
         @media (max-width: 600px) {
-            .container { margin: 10px; padding: 10px; }
+            .container { margin: 10px; padding: 15px; }
             .form-group { flex-direction: column; align-items: stretch; }
-            .form-group label { flex: 0 0 auto; margin-bottom: 3px; font-size: 0.9rem; }
+            .form-group label { flex: 0 0 auto; margin-bottom: 3px; font-size: 0.9rem; padding-right: 0; }
             .form-group input, .form-group textarea { width: 100%; }
-            .company-header h1 { font-size: 1.4rem; }
+            .company-header h1 { font-size: 1.3rem; }
             h2 { font-size: 1.2rem; }
             h3 { font-size: 1rem; }
-            table, th, td { font-size: 0.75rem; }
-            th, td { padding: 5px; }
-            .action-column { width: 80px; }
-            button { font-size: 0.9rem; padding: 8px 12px; }
+            table, th, td { font-size: 0.8rem; } /* Further reduce table font */
+            th, td { padding: 6px; }
+            .action-column { width: 90px; }
+             .action-column button { padding: 4px 6px; font-size: 0.75rem; }
+            button { font-size: 0.9rem; padding: 9px 15px; }
             .bill-info { flex-direction: column; }
-            .bill-info div { width: 100%; margin-bottom: 5px; }
-            /* --- NEW --- Adjust button layout on mobile */
-            .item-form-buttons { display: flex; flex-wrap: wrap; }
-            /* --- End NEW --- */
+            .bill-info div { width: 100%; margin-bottom: 8px; }
+            #customer-info-display { border-right: none; padding-right: 0; border-bottom: 1px dashed #eee; padding-bottom: 8px;}
+             #bill-meta-display { text-align: left; padding-left: 0; }
+            .item-form-buttons button { margin-bottom: 5px; } /* Stack buttons better */
+            .totals-section { text-align: left; } /* Left align totals on mobile */
+            .totals-section h3 { text-align: left; }
+            .totals-section span { float: right; } /* Align amounts to right */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Input Form Section (Hidden on Print) -->
+        <!-- ======================== -->
+        <!-- INPUT FORM (NO PRINT)   -->
+        <!-- ======================== -->
         <div class="no-print">
             <div class="company-header">
                  <div class="logo">
+                    <!-- Replace with your actual logo -->
                     <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
                  </div>
                 <h1>MUMBAI FANCY FURNITURE</h1>
@@ -251,8 +349,8 @@
 
             <h2>Generate New Bill</h2>
 
-            <form id="bill-form">
-                {/* Customer Details Section ... (remains the same) */}
+            <form id="bill-form" onsubmit="return false;"> <!-- Prevent default form submission -->
+                <!-- Customer Details Section -->
                 <div class="form-section">
                     <h3>Customer Details</h3>
                      <div class="form-group">
@@ -273,16 +371,16 @@
                     </div>
                     <div class="form-group">
                         <label for="customer-phone">Phone:</label>
-                        <input type="tel" id="customer-phone">
+                        <input type="tel" id="customer-phone" placeholder="Optional">
                     </div>
                 </div>
 
-                {/* Item Details Section */}
+                <!-- Item Details Section -->
                 <div class="form-section">
-                    <h3>Add/Edit Item</h3> {/* Changed heading slightly */}
+                    <h3>Add / Edit Item</h3>
                     <div class="form-group">
-                        <label for="custom-text">Section Area (Optional):</label>
-                        <input type="text" id="custom-text" placeholder="e.g., Hall, Kitchen, Bedroom 1">
+                        <label for="custom-text">Section Area:</label>
+                        <input type="text" id="custom-text" placeholder="e.g., Hall, Kitchen (Optional)">
                     </div>
                     <div class="form-group">
                         <label for="product-name">Product/Service:</label>
@@ -290,301 +388,370 @@
                     </div>
                     <div class="form-group">
                         <label for="sq-feet-length">Length (ft):</label>
-                        <input type="number" step="0.01" id="sq-feet-length" placeholder="Optional">
+                        <input type="number" step="0.01" min="0" id="sq-feet-length" placeholder="Optional">
                     </div>
                     <div class="form-group">
                         <label for="sq-feet-width">Width (ft):</label>
-                        <input type="number" step="0.01" id="sq-feet-width" placeholder="Optional">
+                        <input type="number" step="0.01" min="0" id="sq-feet-width" placeholder="Optional">
                     </div>
                      <div class="form-group">
-                        <label for="rate">Rate (₹ per sqft/unit):</label>
-                        <input type="number" step="0.01" id="rate" required>
+                        <label for="rate">Rate (₹):</label> <!-- Clarified label -->
+                        <input type="number" step="0.01" min="0.01" id="rate" required placeholder="per sqft or unit">
                     </div>
-                    {/* --- NEW --- Wrapper for buttons */}
                     <div class="item-form-buttons">
                         <button type="button" id="add-update-button" onclick="addOrUpdateItem()">Add Item</button>
-                        {/* --- NEW --- Clear All Button */}
                         <button type="button" class="clear-btn" onclick="removeAllItems()">Clear All Items</button>
                     </div>
-                     {/* --- End NEW --- */}
-                    <input type="hidden" id="edit-row-index">
+                    <input type="hidden" id="edit-row-index"> <!-- To track which row is being edited -->
                 </div>
 
-                 {/* Payment Details Section ... (remains the same) */}
+                 <!-- Payment Details Section -->
                  <div class="form-section">
                      <h3>Payment</h3>
                     <div class="form-group">
                         <label for="paid-amount">Paid Amount (₹):</label>
-                        <input type="number" step="0.01" id="paid-amount" value="0" oninput="updateBalance()">
+                        <input type="number" step="0.01" min="0" id="paid-amount" value="0" oninput="updateBalance()">
                     </div>
                  </div>
             </form>
         </div>
 
-        {/* Bill Display Section (Visible on Print) ... (remains the same) */}
+        <!-- ======================== -->
+        <!-- BILL DISPLAY (PRINTABLE) -->
+        <!-- ======================== -->
         <div id="bill-details">
              <div class="company-header">
                  <div class="logo">
+                     <!-- Replace with your actual logo -->
                     <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
                  </div>
                  <h1>MUMBAI FANCY FURNITURE</h1>
                  <p>Kurla Kutumandal, B.K.C. Road, L.B.S. Marg, Kurla (W), Mumbai-400070.</p>
                  <p>Phone: +91 99567 67572 | Email: Irshadanshari6301@gmail.com</p>
             </div>
+
             <h2>Tax Invoice / Bill</h2>
+
+            <!-- Bill Info (Customer & Meta) -->
             <div class="bill-info">
-                <div id="customer-info-display"></div>
-                 <div id="bill-meta-display" style="text-align: right;"></div>
+                <div id="customer-info-display">
+                    <!-- Populated by JS -->
+                </div>
+                 <div id="bill-meta-display">
+                    <!-- Populated by JS -->
+                </div>
             </div>
+
+            <!-- Bill Items Table -->
             <table id="bill-table">
                 <thead>
                     <tr>
-                        <th>Sr No</th>
+                        <th>Sr.</th> <!-- Abbreviated -->
                         <th>Product / Description</th>
-                        <th>Length (ft)</th>
-                        <th>Width (ft)</th>
-                        <th>Total SqFt / Unit</th>
+                        <th>Length</th> <!-- Abbreviated -->
+                        <th>Width</th> <!-- Abbreviated -->
+                        <th>Total SqFt/Unit</th>
                         <th>Rate (₹)</th>
-                        <th>Total Amount (₹)</th>
+                        <th>Amount (₹)</th> <!-- Abbreviated -->
                         <th class="action-column no-print">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* Bill items will be added here by JS */}
+                    <!-- Bill items will be added here by JS -->
+                     <tr><td colspan="8" style="text-align: center; color: #888; padding: 20px 0;">No items added yet.</td></tr> <!-- Placeholder -->
                 </tbody>
             </table>
+
+            <!-- Totals Section -->
             <div class="totals-section">
-                <h3>Total Amount: ₹<span id="total-amount">0.00</span></h3>
-                <h3>Paid Amount: ₹<span id="display-paid-amount">0.00</span></h3>
-                <h3>Remaining Balance: ₹<span id="remaining-amount">0.00</span></h3>
+                <h3>Total Amount: <span id="total-amount">₹ 0.00</span></h3>
+                <h3>Paid Amount: <span id="display-paid-amount">₹ 0.00</span></h3>
+                <h3>Remaining Balance: <span id="remaining-amount">₹ 0.00</span></h3>
             </div>
         </div>
 
         <button id="print-button" class="no-print" onclick="preparePrint()">Print Bill</button>
     </div>
 
+    <!-- ======================== -->
+    <!-- JAVASCRIPT LOGIC         -->
+    <!-- ======================== -->
     <script>
-        let billItems = [];
-        let editIndex = -1;
+        let billItems = []; // Array to store item data objects
+        let editIndex = -1; // Index of the item being edited, -1 means not editing
+        let totalAmount = 0; // Keep track of the total amount globally
 
+        // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Set default bill date to today
             document.getElementById('bill-date').valueAsDate = new Date();
+            // Initial update for bill no/date display on load
             updateBillDisplayInfo();
+             // Render the initial empty table state
+             renderTable();
         });
 
+        // --- Item Management ---
         function addOrUpdateItem() {
-            // ... (addOrUpdateItem function remains exactly the same as before)
             const customText = document.getElementById('custom-text').value.trim();
             const productName = document.getElementById('product-name').value.trim();
             const sqFeetLengthInput = document.getElementById('sq-feet-length').value;
             const sqFeetWidthInput = document.getElementById('sq-feet-width').value;
             const rateInput = document.getElementById('rate').value;
 
+            // Validation
             if (!productName) {
                 alert('Please enter a Product/Service name.');
+                document.getElementById('product-name').focus();
                 return;
             }
              if (!rateInput || parseFloat(rateInput) <= 0) {
                 alert('Please enter a valid Rate (must be greater than 0).');
+                 document.getElementById('rate').focus();
                 return;
              }
 
+            // Parse inputs, handle potential non-numbers gracefully
             const sqFeetLength = parseFloat(sqFeetLengthInput) || 0;
             const sqFeetWidth = parseFloat(sqFeetWidthInput) || 0;
             const rate = parseFloat(rateInput);
 
-            let totalSqFeet = 1;
+            // Calculate Total SqFt/Units
+            let totalSqFeet = 1; // Default to 1 unit
             if (sqFeetLength > 0 && sqFeetWidth > 0) {
-                totalSqFeet = sqFeetLength * sqFeetWidth;
+                totalSqFeet = sqFeetLength * sqFeetWidth; // Use LxW if both provided
             } else if (sqFeetLength > 0) {
-                 totalSqFeet = sqFeetLength;
+                 totalSqFeet = sqFeetLength; // Use L if only L provided
             } else if (sqFeetWidth > 0) {
-                 totalSqFeet = sqFeetWidth;
+                 totalSqFeet = sqFeetWidth; // Use W if only W provided
             }
+            // If neither L nor W provided, totalSqFeet remains 1 (for unit-based pricing)
 
             const totalAmountForItem = totalSqFeet * rate;
 
+            // Create item data object
             const itemData = {
                 customText: customText,
                 productName: productName,
-                sqFeetLength: sqFeetLength > 0 ? sqFeetLength : null,
+                sqFeetLength: sqFeetLength > 0 ? sqFeetLength : null, // Store null if 0 or invalid
                 sqFeetWidth: sqFeetWidth > 0 ? sqFeetWidth : null,
                 totalSqFeet: totalSqFeet,
                 rate: rate,
-                totalAmount: totalAmountForItem
+                totalAmount: totalAmountForItem,
+                // Add a unique ID for potential future enhancements (optional but good practice)
+                id: Date.now() + Math.random().toString(36).substring(2)
             };
 
             if (editIndex > -1) {
+                // Update existing item in the array
                 billItems[editIndex] = itemData;
-                editIndex = -1;
+                editIndex = -1; // Exit edit mode
                 document.getElementById('add-update-button').textContent = 'Add Item';
             } else {
+                // Add new item to the array
                 billItems.push(itemData);
             }
 
-            renderTable();
-            updateTotals();
-            resetFormFields(); // Use specific reset for item fields
+            renderTable(); // Refresh the table display
+            updateTotals(); // Recalculate and display totals
+            resetItemFormFields(); // Clear the item input fields
         }
 
         function editItem(index) {
-            // ... (editItem function remains exactly the same as before)
-             if (index < 0 || index >= billItems.length) return;
+            if (index < 0 || index >= billItems.length) return; // Basic boundary check
 
-            editIndex = index;
+            editIndex = index; // Set the index of the item being edited
             const item = billItems[index];
 
+            // Populate the form fields with the data of the selected item
             document.getElementById('custom-text').value = item.customText || '';
             document.getElementById('product-name').value = item.productName;
             document.getElementById('sq-feet-length').value = item.sqFeetLength || '';
             document.getElementById('sq-feet-width').value = item.sqFeetWidth || '';
             document.getElementById('rate').value = item.rate;
 
+            // Change button text and focus the first field
             document.getElementById('add-update-button').textContent = 'Update Item';
             document.getElementById('product-name').focus();
+            // Optionally scroll the form into view if it's long
+            document.getElementById('bill-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function deleteItem(index) {
-            // ... (deleteItem function remains exactly the same as before)
-             if (index < 0 || index >= billItems.length) return;
+             if (index < 0 || index >= billItems.length) return; // Boundary check
 
-             if (confirm(`Are you sure you want to delete item "${billItems[index].productName}"?`)) {
-                billItems.splice(index, 1);
+             const itemNameToDelete = billItems[index].productName;
+             // Confirmation dialog
+             if (confirm(`Are you sure you want to delete item "${itemNameToDelete}"?`)) {
+                billItems.splice(index, 1); // Remove item from the array
+
+                // If the deleted item was the one being edited, reset the form and edit mode
                 if (editIndex === index) {
-                     resetFormFields(); // Use specific reset
+                     resetItemFormFields();
                      editIndex = -1;
                      document.getElementById('add-update-button').textContent = 'Add Item';
                  } else if (editIndex > index) {
+                     // If an item before the edited item was deleted, adjust the edit index
                      editIndex--;
                  }
-                renderTable();
-                updateTotals();
+
+                renderTable(); // Refresh the table
+                updateTotals(); // Recalculate totals
             }
         }
 
-        // --- NEW FUNCTION ---
         function removeAllItems() {
             if (billItems.length === 0) {
                 alert("There are no items to remove.");
                 return;
             }
+            // Confirmation dialog
             if (confirm("Are you sure you want to remove ALL items from this bill? This cannot be undone.")) {
-                billItems = []; // Clear the array
-                editIndex = -1; // Reset edit mode just in case
-                renderTable(); // Update the table (will be empty)
-                updateTotals(); // Update totals (will be zero)
-                resetFormFields(); // Clear the item input fields
+                billItems = []; // Clear the items array
+                editIndex = -1; // Reset edit mode
+                renderTable(); // Render the empty table
+                updateTotals(); // Reset totals to zero
+                resetItemFormFields(); // Clear the item form
                 alert("All items have been removed.");
             }
         }
-        // --- End NEW FUNCTION ---
 
+        // --- Rendering and Calculations ---
         function renderTable() {
-            // ... (renderTable function remains exactly the same as before)
             const billTableBody = document.querySelector('#bill-table tbody');
-            billTableBody.innerHTML = '';
+            billTableBody.innerHTML = ''; // Clear existing rows first
             let srNoCounter = 1;
 
+            if (billItems.length === 0) {
+                 // Show placeholder row if no items
+                 billTableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #888; padding: 20px 0;">No items added yet.</td></tr>`;
+                 return; // Exit function early
+            }
+
+
             billItems.forEach((item, index) => {
+                // Add custom text (section heading) row if present for this item
                 if (item.customText) {
                     const customTextRow = document.createElement('tr');
                     customTextRow.classList.add('custom-text-row');
+                    // Span all 8 columns (including the hidden action column)
                     customTextRow.innerHTML = `<td colspan="8">${item.customText}</td>`;
                     billTableBody.appendChild(customTextRow);
                 }
 
+                // Add the main item details row
                 const newRow = document.createElement('tr');
+                // Use data-index attribute for easier reference in JS if needed later
+                newRow.setAttribute('data-index', index);
                 newRow.innerHTML = `
-                    <td>${srNoCounter}</td>
+                    <td style="text-align: center;">${srNoCounter}</td>
                     <td>${item.productName}</td>
-                    <td>${item.sqFeetLength ? item.sqFeetLength.toFixed(2) : 'N/A'}</td>
-                    <td>${item.sqFeetWidth ? item.sqFeetWidth.toFixed(2) : 'N/A'}</td>
+                    <td>${item.sqFeetLength ? item.sqFeetLength.toFixed(2) : '---'}</td>
+                    <td>${item.sqFeetWidth ? item.sqFeetWidth.toFixed(2) : '---'}</td>
                     <td>${item.totalSqFeet.toFixed(2)}</td>
-                    <td>₹${item.rate.toFixed(2)}</td>
-                    <td>₹${item.totalAmount.toFixed(2)}</td>
+                    <td>${item.rate.toFixed(2)}</td>
+                    <td>${item.totalAmount.toFixed(2)}</td>
                     <td class="action-column no-print">
-                        <button class="edit-btn" onclick="editItem(${index})">Edit</button>
-                        <button class="delete-btn" onclick="deleteItem(${index})">Delete</button>
+                        <button class="edit-btn" onclick="editItem(${index})" title="Edit Item">Edit</button>
+                        <button class="delete-btn" onclick="deleteItem(${index})" title="Delete Item">Delete</button>
                     </td>
                 `;
                 billTableBody.appendChild(newRow);
-                srNoCounter++;
+                srNoCounter++; // Increment serial number for the next item row
             });
         }
 
          function updateTotals() {
-            // ... (updateTotals function remains exactly the same as before)
+            // Calculate total amount by summing up totalAmount of each item in the array
             totalAmount = billItems.reduce((sum, item) => sum + item.totalAmount, 0);
-            document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+            // Display the total amount formatted to 2 decimal places
+            document.getElementById('total-amount').textContent = `₹ ${totalAmount.toFixed(2)}`;
+            // Update the balance whenever the total changes
             updateBalance();
          }
 
         function updateBalance() {
-            // ... (updateBalance function remains exactly the same as before)
+            // Get the paid amount from the input field, default to 0 if empty or invalid
             const paidAmount = parseFloat(document.getElementById('paid-amount').value) || 0;
-            const currentTotal = parseFloat(document.getElementById('total-amount').textContent) || 0;
-            const remainingAmount = currentTotal - paidAmount;
+            // Calculate remaining balance
+            const remainingAmount = totalAmount - paidAmount;
 
-            document.getElementById('display-paid-amount').textContent = paidAmount.toFixed(2);
-            document.getElementById('remaining-amount').textContent = remainingAmount.toFixed(2);
+            // Display paid and remaining amounts formatted
+            document.getElementById('display-paid-amount').textContent = `₹ ${paidAmount.toFixed(2)}`;
+            document.getElementById('remaining-amount').textContent = `₹ ${remainingAmount.toFixed(2)}`;
         }
 
-         // Renamed resetForm to resetFormFields to be more specific
-         function resetFormFields() {
+         // --- Form Handling ---
+         function resetItemFormFields() {
+            // Clear only the fields related to adding/editing an item
             document.getElementById('custom-text').value = '';
             document.getElementById('product-name').value = '';
             document.getElementById('sq-feet-length').value = '';
             document.getElementById('sq-feet-width').value = '';
             document.getElementById('rate').value = '';
-            // Don't reset editIndex here unless specifically intended
-            document.getElementById('add-update-button').textContent = 'Add Item';
-             if (editIndex > -1) { // Ensure edit mode is fully exited if form is reset manually or via clear
-                 editIndex = -1;
-             }
+            // Ensure the button text is reset if form is cleared while in edit mode
+            if (editIndex > -1) {
+                 document.getElementById('add-update-button').textContent = 'Add Item';
+                 editIndex = -1; // Make sure to exit edit mode
+            }
         }
 
+        // --- Bill Header/Footer Info ---
         function updateBillDisplayInfo() {
-             // ... (updateBillDisplayInfo function remains exactly the same as before)
-             const billNo = document.getElementById('bill-no').value;
+             const billNo = document.getElementById('bill-no').value || 'N/A';
              const billDateInput = document.getElementById('bill-date').value;
-             const customerName = document.getElementById('customer-name').value;
-             const customerAddress = document.getElementById('customer-address').value.replace(/\n/g, '<br>');
-             const customerPhone = document.getElementById('customer-phone').value;
+             const customerName = document.getElementById('customer-name').value || 'N/A';
+             // Replace newlines with <br> for HTML display
+             const customerAddress = (document.getElementById('customer-address').value || 'N/A').replace(/\n/g, '<br>');
+             const customerPhone = document.getElementById('customer-phone').value || 'N/A';
 
+            // Format Date (DD/MM/YYYY)
             let billDateFormatted = 'N/A';
              if (billDateInput) {
-                 const date = new Date(billDateInput);
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                 billDateFormatted = `${day}/${month}/${year}`;
+                 try {
+                     const date = new Date(billDateInput + 'T00:00:00'); // Ensure date is parsed correctly regardless of timezone
+                     if (!isNaN(date)) {
+                         const day = String(date.getDate()).padStart(2, '0');
+                         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                         const year = date.getFullYear();
+                         billDateFormatted = `${day}/${month}/${year}`;
+                     }
+                 } catch (e) {
+                     console.error("Error formatting date:", e);
+                     // Keep billDateFormatted as 'N/A'
+                 }
              }
 
+            // Update the customer info display area
             document.getElementById('customer-info-display').innerHTML = `
                 <strong>To:</strong><br>
-                ${customerName || 'N/A'}<br>
-                ${customerAddress || 'N/A'}<br>
-                Ph: ${customerPhone || 'N/A'}
+                ${customerName}<br>
+                ${customerAddress}<br>
+                <strong>Ph:</strong> ${customerPhone}
             `;
+            // Update the bill metadata display area
              document.getElementById('bill-meta-display').innerHTML = `
-                 <strong>Bill No:</strong> ${billNo || 'N/A'}<br>
+                 <strong>Bill No:</strong> ${billNo}<br>
                  <strong>Date:</strong> ${billDateFormatted}
              `;
         }
 
-
+        // --- Printing ---
         function preparePrint() {
-             // ... (preparePrint function remains exactly the same as before)
+             // Ensure the latest customer/bill details are reflected in the display section
              updateBillDisplayInfo();
+             // Trigger the browser's print dialog
+             // The @media print CSS rules will handle hiding elements
             window.print();
         }
 
-        // Event Listeners ... (remain the same)
+        // --- Event Listeners for Live Updates ---
         document.getElementById('customer-name').addEventListener('input', updateBillDisplayInfo);
         document.getElementById('customer-address').addEventListener('input', updateBillDisplayInfo);
         document.getElementById('customer-phone').addEventListener('input', updateBillDisplayInfo);
         document.getElementById('bill-no').addEventListener('input', updateBillDisplayInfo);
         document.getElementById('bill-date').addEventListener('change', updateBillDisplayInfo);
+        // The paid amount input already has an oninput handler: oninput="updateBalance()"
 
     </script>
 </body>
