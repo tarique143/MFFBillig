@@ -28,31 +28,21 @@
         /* --- Company Header --- */
         .company-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px; /* Increased bottom margin */
             border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
+            padding-bottom: 20px; /* Increased bottom padding */
         }
 
         .company-header .logo img {
-            max-width: 150px;
-            margin-bottom: 10px;
+            /* Increased size for logo as main header */
+            max-width: 250px;
+            /* Removed bottom margin as text is gone */
             display: block;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .company-header h1 {
-            margin: 5px 0;
-            color: #0056b3;
-            font-size: 1.6rem;
-        }
-
-        .company-header p {
-            margin: 3px 0;
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.4;
-        }
+        /* REMOVED H1 and P styles for company header text */
 
         /* --- Headings --- */
         h2, h3 {
@@ -60,7 +50,7 @@
             margin: 15px 0;
             color: #333;
         }
-        h2 { font-size: 1.4rem; }
+        h2 { font-size: 1.4rem; margin-top: 0; } /* Adjust margin for Bill title */
         h3 { font-size: 1.1rem; }
 
 
@@ -238,7 +228,7 @@
         .bill-details {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 2px solid #0056b3;
+            /* Removed border-top as company header now provides separation */
         }
 
         .bill-info {
@@ -248,6 +238,9 @@
             flex-wrap: wrap;
             font-size: 0.95rem;
             line-height: 1.6;
+            border-top: 2px solid #0056b3; /* Moved border here */
+            padding-top: 20px; /* Added padding */
+            margin-top: 20px; /* Added margin */
         }
         .bill-info div {
             width: 48%;
@@ -281,16 +274,32 @@
             .totals-section { margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc; }
             .totals-section h3 { font-size: 10pt; margin: 4px 0; }
             .totals-section span { min-width: 80px; }
-            .company-header, .bill-details { border-top: none; padding-top: 0; margin-top: 0; }
-            .company-header { border-bottom: 1px solid #ccc; padding-bottom: 10px; text-align: center; }
-            .company-header h1 { font-size: 14pt; margin-bottom: 5px; }
-            .company-header p { font-size: 9pt; margin: 2px 0; }
-            .company-header .logo img { max-width: 120px; margin-bottom: 5px; }
-            .bill-info { font-size: 9pt; margin-bottom: 15px; line-height: 1.4; }
-            .bill-info div { width: 49%; }
-            #customer-info-display { border-right: none; padding-right: 0; }
-            #bill-meta-display { padding-left: 0; }
-            .custom-text-row td { background-color: #f0f0f0 !important; color: black !important; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-style: normal; }
+
+            .company-header {
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 10px; /* Adjusted */
+                margin-bottom: 15px; /* Adjusted */
+                text-align: center;
+             }
+             /* Removed H1/P font size rules for header */
+             .company-header .logo img {
+                 max-width: 200px; /* Increased print logo size */
+                 margin-bottom: 0; /* Removed bottom margin */
+            }
+
+             .bill-details { border-top: none; padding-top: 0; margin-top: 0; }
+             .bill-info {
+                font-size: 9pt;
+                margin-bottom: 15px;
+                line-height: 1.4;
+                border-top: 2px solid #333; /* Make border visible in print */
+                padding-top: 15px;
+                margin-top: 15px;
+             }
+             .bill-info div { width: 49%; }
+             #customer-info-display { border-right: none; padding-right: 0; }
+             #bill-meta-display { padding-left: 0; }
+             .custom-text-row td { background-color: #f0f0f0 !important; color: black !important; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-style: normal; }
             button { display: none; }
             @page {
                 size: A4;
@@ -299,22 +308,18 @@
 
             /* --- START: PRINT WATERMARK --- */
             body::after {
-                content: ""; /* Required for pseudo-elements */
+                content: "";
                 background-image: url('small_logo.png'); /* Your watermark image */
-                background-repeat: no-repeat;          /* Do not tile the image */
-                background-position: center center;      /* Center it on the page */
-                background-size: contain; /* Scale down large images to fit, preserving aspect ratio */
-                /* Optional: Use percentage for size relative to page: background-size: 60%; */
-                /* Optional: Use fixed pixel size: background-size: 300px; */
-
-                position: fixed; /* Fixed relative to the page */
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: contain;
+                position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                z-index: -1;     /* Send it behind the main content */
-
-                opacity: 0.1;  /* Make it faint (adjust 0.0 to 1.0) */
+                z-index: -1;
+                opacity: 0.1;
             }
             /* --- END: PRINT WATERMARK --- */
         }
@@ -325,7 +330,7 @@
             .form-group { flex-direction: column; align-items: stretch; }
             .form-group label { flex: 0 0 auto; margin-bottom: 3px; font-size: 0.9rem; padding-right: 0; }
             .form-group input, .form-group textarea { width: 100%; }
-            .company-header h1 { font-size: 1.3rem; }
+            .company-header .logo img { max-width: 180px; } /* Adjust mobile logo size */
             h2 { font-size: 1.2rem; }
             h3 { font-size: 1rem; }
             table, th, td { font-size: 0.8rem; }
@@ -333,7 +338,7 @@
             .action-column { width: 90px; }
             .action-column button { padding: 4px 6px; font-size: 0.75rem; }
             button { font-size: 0.9rem; padding: 9px 15px; }
-            .bill-info { flex-direction: column; }
+            .bill-info { flex-direction: column; border-top: 1px solid #ccc; padding-top: 15px; margin-top: 15px; }
             .bill-info div { width: 100%; margin-bottom: 8px; }
             #customer-info-display { border-right: none; padding-right: 0; border-bottom: 1px dashed #eee; padding-bottom: 8px;}
             #bill-meta-display { text-align: left; padding-left: 0; }
@@ -352,11 +357,10 @@
         <div class="no-print">
             <div class="company-header">
                  <div class="logo">
+                    <!-- Main Logo for Screen -->
                     <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
                  </div>
-                <h1>MUMBAI FANCY FURNITURE</h1>
-                 <p>Kurla Kutumandal, B.K.C. Road, L.B.S. Marg, Kurla (W), Mumbai-400070.</p>
-                 <p>Phone: +91 99567 67572 | Email: Irshadanshari6301@gmail.com</p>
+                 <!-- Text details removed -->
             </div>
 
             <h2>Generate New Bill</h2>
@@ -434,11 +438,10 @@
         <div id="bill-details">
              <div class="company-header">
                  <div class="logo">
+                     <!-- Main Logo for Print -->
                     <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
                  </div>
-                 <h1>MUMBAI FANCY FURNITURE</h1>
-                 <p>Kurla Kutumandal, B.K.C. Road, L.B.S. Marg, Kurla (W), Mumbai-400070.</p>
-                 <p>Phone: +91 99567 67572 | Email: Irshadanshari6301@gmail.com</p>
+                  <!-- Text details removed -->
             </div>
 
             <h2>Tax Invoice / Bill</h2>
@@ -483,18 +486,17 @@
     <!-- JAVASCRIPT LOGIC         -->
     <!-- ======================== -->
     <script>
+        // --- Javascript remains exactly the same as the previous version ---
         let billItems = [];
         let editIndex = -1;
         let totalAmount = 0;
 
-        // --- Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('bill-date').valueAsDate = new Date();
             updateBillDisplayInfo();
              renderTable();
         });
 
-        // --- Item Management ---
         function addOrUpdateItem() {
             const customText = document.getElementById('custom-text').value.trim();
             const productName = document.getElementById('product-name').value.trim();
@@ -602,7 +604,6 @@
             }
         }
 
-        // --- Rendering and Calculations ---
         function renderTable() {
             const billTableBody = document.querySelector('#bill-table tbody');
             billTableBody.innerHTML = '';
@@ -654,7 +655,6 @@
             document.getElementById('remaining-amount').textContent = `₹ ${remainingAmount.toFixed(2)}`;
         }
 
-         // --- Form Handling ---
          function resetItemFormFields() {
             document.getElementById('custom-text').value = '';
             document.getElementById('product-name').value = '';
@@ -667,7 +667,6 @@
             }
         }
 
-        // --- Bill Header/Footer Info ---
         function updateBillDisplayInfo() {
              const billNo = document.getElementById('bill-no').value || 'N/A';
              const billDateInput = document.getElementById('bill-date').value;
@@ -702,13 +701,11 @@
              `;
         }
 
-        // --- Printing ---
         function preparePrint() {
              updateBillDisplayInfo();
             window.print();
         }
 
-        // --- Event Listeners ---
         document.getElementById('customer-name').addEventListener('input', updateBillDisplayInfo);
         document.getElementById('customer-address').addEventListener('input', updateBillDisplayInfo);
         document.getElementById('customer-phone').addEventListener('input', updateBillDisplayInfo);
