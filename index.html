@@ -28,21 +28,18 @@
         /* --- Company Header --- */
         .company-header {
             text-align: center;
-            margin-bottom: 25px; /* Increased bottom margin */
+            margin-bottom: 25px;
             border-bottom: 1px solid #eee;
-            padding-bottom: 20px; /* Increased bottom padding */
+            padding-bottom: 20px;
         }
 
         .company-header .logo img {
-            /* Increased size for logo as main header */
-            max-width: 250px;
-            /* Removed bottom margin as text is gone */
+            max-width: 250px; /* Size for screen view */
             display: block;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* REMOVED H1 and P styles for company header text */
 
         /* --- Headings --- */
         h2, h3 {
@@ -50,7 +47,7 @@
             margin: 15px 0;
             color: #333;
         }
-        h2 { font-size: 1.4rem; margin-top: 0; } /* Adjust margin for Bill title */
+        h2 { font-size: 1.4rem; margin-top: 0; }
         h3 { font-size: 1.1rem; }
 
 
@@ -228,7 +225,6 @@
         .bill-details {
             margin-top: 30px;
             padding-top: 20px;
-            /* Removed border-top as company header now provides separation */
         }
 
         .bill-info {
@@ -238,9 +234,9 @@
             flex-wrap: wrap;
             font-size: 0.95rem;
             line-height: 1.6;
-            border-top: 2px solid #0056b3; /* Moved border here */
-            padding-top: 20px; /* Added padding */
-            margin-top: 20px; /* Added margin */
+            border-top: 2px solid #0056b3;
+            padding-top: 20px;
+            margin-top: 20px;
         }
         .bill-info div {
             width: 48%;
@@ -277,14 +273,19 @@
 
             .company-header {
                 border-bottom: 1px solid #ccc;
-                padding-bottom: 10px; /* Adjusted */
-                margin-bottom: 15px; /* Adjusted */
+                padding-bottom: 10px;
+                margin-bottom: 15px;
                 text-align: center;
              }
-             /* Removed H1/P font size rules for header */
              .company-header .logo img {
-                 max-width: 200px; /* Increased print logo size */
-                 margin-bottom: 0; /* Removed bottom margin */
+                 /* UPDATED: Make the logo much wider on print */
+                 width: 80%;      /* Adjust percentage 70% - 100% as needed */
+                 max-width: none; /* Remove any previous pixel limit */
+                 height: auto;    /* Maintain aspect ratio */
+                 margin-bottom: 0;
+                 display: block;
+                 margin-left: auto;
+                 margin-right: auto;
             }
 
              .bill-details { border-top: none; padding-top: 0; margin-top: 0; }
@@ -292,7 +293,7 @@
                 font-size: 9pt;
                 margin-bottom: 15px;
                 line-height: 1.4;
-                border-top: 2px solid #333; /* Make border visible in print */
+                border-top: 2px solid #333;
                 padding-top: 15px;
                 margin-top: 15px;
              }
@@ -309,7 +310,7 @@
             /* --- START: PRINT WATERMARK --- */
             body::after {
                 content: "";
-                background-image: url('small_logo.png'); /* Your watermark image */
+                background-image: url('small_logo.png'); /* Watermark image */
                 background-repeat: no-repeat;
                 background-position: center center;
                 background-size: contain;
@@ -330,7 +331,7 @@
             .form-group { flex-direction: column; align-items: stretch; }
             .form-group label { flex: 0 0 auto; margin-bottom: 3px; font-size: 0.9rem; padding-right: 0; }
             .form-group input, .form-group textarea { width: 100%; }
-            .company-header .logo img { max-width: 180px; } /* Adjust mobile logo size */
+            .company-header .logo img { max-width: 180px; }
             h2 { font-size: 1.2rem; }
             h3 { font-size: 1rem; }
             table, th, td { font-size: 0.8rem; }
@@ -357,14 +358,10 @@
         <div class="no-print">
             <div class="company-header">
                  <div class="logo">
-                    <!-- Main Logo for Screen -->
                     <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
                  </div>
-                 <!-- Text details removed -->
             </div>
-
             <h2>Generate New Bill</h2>
-
             <form id="bill-form" onsubmit="return false;">
                 <!-- Customer Details Section -->
                 <div class="form-section">
@@ -390,7 +387,6 @@
                         <input type="tel" id="customer-phone" placeholder="Optional">
                     </div>
                 </div>
-
                 <!-- Item Details Section -->
                 <div class="form-section">
                     <h3>Add / Edit Item</h3>
@@ -420,7 +416,6 @@
                     </div>
                     <input type="hidden" id="edit-row-index">
                 </div>
-
                  <!-- Payment Details Section -->
                  <div class="form-section">
                      <h3>Payment</h3>
@@ -438,20 +433,15 @@
         <div id="bill-details">
              <div class="company-header">
                  <div class="logo">
-                     <!-- Main Logo for Print -->
                     <img src="logo.jpg" alt="MUMBAI FANCY FURNITURE Logo">
                  </div>
-                  <!-- Text details removed -->
             </div>
-
-            
-
+            <h2>Tax Invoice / Bill</h2>
             <!-- Bill Info (Customer & Meta) -->
             <div class="bill-info">
                 <div id="customer-info-display"></div>
                  <div id="bill-meta-display"></div>
             </div>
-
             <!-- Bill Items Table -->
             <table id="bill-table">
                 <thead>
@@ -470,7 +460,6 @@
                      <tr><td colspan="8" style="text-align: center; color: #888; padding: 20px 0;">No items added yet.</td></tr>
                 </tbody>
             </table>
-
             <!-- Totals Section -->
             <div class="totals-section">
                 <h3>Total Amount: <span id="total-amount">₹ 0.00</span></h3>
@@ -486,7 +475,7 @@
     <!-- JAVASCRIPT LOGIC         -->
     <!-- ======================== -->
     <script>
-        // --- Javascript remains exactly the same as the previous version ---
+        // --- Javascript remains unchanged ---
         let billItems = [];
         let editIndex = -1;
         let totalAmount = 0;
